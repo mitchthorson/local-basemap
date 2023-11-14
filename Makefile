@@ -1,19 +1,19 @@
-IMAGE_NAME := local-basemap-pmtiles
-
-.PHONY: docker-run docker-build
+.PHONY: docker-run 
 
 help:
 	@echo Run an available command
 	@echo docker-run
-	@echo docker-build
-	@echo data/planet_tiles.pmtiles
+	@echo data/nyc.pmtiles
 
-docker-run:
-	docker run --name local-basemap --rm -d -p 8080:80 $(IMAGE_NAME):dev
+docker-run: data/nyc.pmtiles
+	docker run \
+		-p 3000:3000 \
+		-v ./data:/files \
+		ghcr.io/maplibre/martin /files
 
-docker-build: data/planet_tiles.pmtiles
-	docker build -t $(IMAGE_NAME):dev .
-
-data/planet_tiles.pmtiles:
+data/nyc.pmtiles:
 	mkdir -p $(dir $@)
-	curl -o $@ https://pub-9288c68512ed46eca46ddcade307709b.r2.dev/protomaps-sample-datasets/protomaps_vector_planet_odbl_z10.pmtiles
+	pmtiles extract \
+		https://build.protomaps.com/20231113.pmtiles \
+		$@ \
+		--bbox=-74.389801,40.464711,-73.218384,41.116607

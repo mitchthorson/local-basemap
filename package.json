@@ -1,7 +1,7 @@
 {
-  "name": "basemap-test",
+  "name": "martin-map",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,8 +13,8 @@
     "vite": "^4.1.0"
   },
   "dependencies": {
-    "maplibre-gl": "^2.4.0",
+    "maplibre-gl": "^3.6.0",
     "pmtiles": "^2.7.0",
-    "protomaps-themes-base": "^1.3.0"
+    "protomaps-themes-base": "^2.0.0-alpha.4"
   }
 }
