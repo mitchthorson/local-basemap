@@ -18,11 +18,11 @@ To download basemap data and run a Docker image, simply run:
 make docker-run
 ```
 
-Vector tiles should now be available at http://localhost:3000/nyc.pmtiles
+Vector tiles should now be available at http://localhost:3000/nyc/{z}/{x}/{y}.pbf
 
 ## Running front end 
 
-Included in this repo is a basic TypeScript + Vite [MapLibre implementation](https://maplibre.org/) that loads vector data from the locally running Martin server and renders them with [Protomaps' basemap theme](https://docs.protomaps.com/basemaps/maplibre).
+Included in this repo is a basic TypeScript + Vite project with a simple [MapLibre implementation](https://maplibre.org/) that loads vector data from the locally running Martin server and renders them with [Protomaps' basemap theme](https://docs.protomaps.com/basemaps/maplibre).
 
 First, install the dependencies with:
 
@@ -38,4 +38,9 @@ npm run dev
 
 You should be able to see the map rendering at [http://localhost:5173](http://localhost:5173)
 
+## Next steps
 
+I'm curious about each layer of this, and I'm relying on a lot of helpful work from Protomaps at the moment. Specifically I'd like to try:
+
+- [ ] A custom basemap theme, likely using the [Protomaps package](https://github.com/protomaps/basemaps/tree/main/styles) as a starting point
+- [ ] Generating and hosting my own font glyphs, rather than relying on Protomaps' hosted fonts. Here there is more to learn from the [Protomaps examples](https://github.com/protomaps/basemaps-assets) again
