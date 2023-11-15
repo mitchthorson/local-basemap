@@ -1,10 +1,10 @@
 import "./style.css";
-import "../node_modules/maplibre-gl/dist/maplibre-gl.css";
 import { interpolateInferno } from "d3-scale-chromatic";
 import { extent } from "d3-array";
 import { scaleSequential } from "d3-scale";
 
-import maplibregl from "maplibre-gl"; // or "const maplibregl = require("maplibre-gl");"
+import maplibregl from "maplibre-gl";
+import "maplibre-gl/dist/maplibre-gl.css";
 import layers from "protomaps-themes-base";
 
 
