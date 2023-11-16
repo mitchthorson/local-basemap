@@ -18,7 +18,7 @@ const mapStyle = {
   sources: {
     protomaps: {
       type: "vector",
-      url: `pmtiles://${location.protocol}//${location.host}${location.pathname}data/nyc.pmtiles`,
+      url: `pmtiles://${location.protocol}//${location.host}${location.pathname}data/us.pmtiles`,
       attribution:
         '<a href="https://protomaps.com">Protomaps</a> © <a href="https://openstreetmap.org">OpenStreetMap</a>',
     },
@@ -29,26 +29,31 @@ const mapStyle = {
 const map = new maplibregl.Map({
   container: "map",
   style: mapStyle, // stylesheet location
-  center: [-73.935242, 40.730610],
-  zoom: 10,
-  maxZoom: 15,
+  center: [-98.261719,40.245992],
+  zoom: 3.5,
+  maxZoom: 8,
   maxBounds: [
-    [-74.389801, 40.464711],
-    [-73.218384, 41.116607],
+    [-130.429688, 14.63468],
+    [-62.929688, 50.847573],
   ],
 });
 
 map.addControl(new maplibregl.NavigationControl());
 
 map.on("load", () => {
-  fetch("nyc_income.json")
+  fetch("data/us_county_income.json")
     .then((response) => response.json())
     .then((data) => {
-			const color = scaleSequential(extent(data.features, d => d.properties.estimate ), interpolateInferno);
-			data.features = data.features.filter((d) => d.properties.estimate != null).map(d => {
-				d.properties.color = color(d.properties.estimate);
-				return d;
-			});
+      const color = scaleSequential(
+        extent(data.features, (d) => d.properties.estimate),
+        interpolateInferno,
+      );
+      data.features = data.features
+        .filter((d) => d.properties.estimate != null)
+        .map((d) => {
+          d.properties.color = color(d.properties.estimate);
+          return d;
+        });
       map.addSource("income", {
         type: "geojson",
         data: data,
@@ -58,7 +63,7 @@ map.on("load", () => {
         type: "fill",
         source: "income",
         layout: {},
-        paint: { "fill-color": ["get", "color"], "fill-opacity": 0.75, },
-      });
+        paint: { "fill-color": ["get", "color"], "fill-opacity": 0.75 },
+      }, "places_subplace");
     });
 });
