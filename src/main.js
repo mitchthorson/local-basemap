@@ -2,11 +2,14 @@ import "./style.css";
 import { interpolateInferno } from "d3-scale-chromatic";
 import { extent } from "d3-array";
 import { scaleSequential } from "d3-scale";
+import * as pmtiles from "pmtiles";
 
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import layers from "protomaps-themes-base";
 
+const protocol = new pmtiles.Protocol();
+maplibregl.addProtocol("pmtiles", protocol.tile);
 
 const mapStyle = {
   version: 8,
@@ -15,7 +18,7 @@ const mapStyle = {
   sources: {
     protomaps: {
       type: "vector",
-      url: "http://localhost:3000/nyc",
+      url: `pmtiles://${location.protocol}//${location.host}${location.pathname}data/nyc.pmtiles`,
       attribution:
         '<a href="https://protomaps.com">Protomaps</a> © <a href="https://openstreetmap.org">OpenStreetMap</a>',
     },
@@ -26,10 +29,9 @@ const mapStyle = {
 const map = new maplibregl.Map({
   container: "map",
   style: mapStyle, // stylesheet location
-  vounds: [
-    [-74.389801, 40.464711],
-    [-73.218384, 41.116607],
-  ],
+  center: [-73.935242, 40.730610],
+  zoom: 10,
+  maxZoom: 15,
   maxBounds: [
     [-74.389801, 40.464711],
     [-73.218384, 41.116607],
